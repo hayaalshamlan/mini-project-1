@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model BankBranch
+<h1> Branch Details</h1>
+<table class="Table">
+    <tr>
+        <th>Name</th>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <th>Location url</th>
+        <td>@Model.LocationURL</td>
+    </tr>
+    <tr>
+        <th>Location name</th>
+        <td>@Model.LocationName</td>
+    </tr>
+    <tr>
+        <th>Branch Manager</th>
+        <td>@Model.BranchManager</td>
+    </tr>
+    <tr>
+        <th>Employee Count</th>
+        <td>@Model.EmployeeCount</td>
+    </tr>
+</table>

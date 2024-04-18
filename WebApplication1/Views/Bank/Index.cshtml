@@ -1,0 +1,30 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<BankBranch>
+
+<table class=" table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>LocationURL</th>
+            <th>LocationName</th>
+            <th>Bank Manager</th>
+            <th>Employee Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var branch in Model)
+        {
+            <tr>
+                <td><a href="@Url.Action("Details", "Bank", new {id = branch.Id})">@branch.Name</a></td>
+                <td><a href="@branch.LocationURL">🌎</a></td>
+                <td>@branch.LocationName</td>
+                <td>@branch.BranchManager</td>
+                <td>@branch.EmployeeCount</td>
+            </tr>
+        }
+    </tbody>
+</table>
