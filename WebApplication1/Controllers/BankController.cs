@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -7,11 +8,7 @@ namespace WebApplication1.Controllers
     {
 
 
-        private static List<BankBranch> bankBranches = new List<BankBranch>
-        {
-                new BankBranch { Id = 1, Name = "kfh", LocationURL = "jjhshshs", LocationName = "kwt", BranchManager = "sara", EmployeeCount = 23 },
-                new BankBranch {Id = 2, Name = "nbk", LocationURL = "ggahah", LocationName = "sura", BranchManager = "haya", EmployeeCount = 45 }
-        };
+       
         public IActionResult Index()
         {
             var context = new BankContext();
@@ -24,7 +21,7 @@ namespace WebApplication1.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Add(NewBranchForm model)
+        public IActionResult Create(NewBranchForm model)
         {
             if (ModelState.IsValid)
             {
@@ -52,7 +49,7 @@ namespace WebApplication1.Controllers
         {
             using (var context = new BankContext())
             {
-                var bankBranch = bankBranches.FirstOrDefault(b => b.Id == id);
+                var bankBranch = context.BankBranches.Include(r=> r.Employees).FirstOrDefault(b => b.Id == id);
                 if (bankBranch == null)
                 {
                     return NotFound();
@@ -83,12 +80,12 @@ namespace WebApplication1.Controllers
 
         }
         [HttpPost]
-        public IActionResult Edit(int id, NewBranchForm newBranchForm) 
-        { 
-        using (var context = new BankContext())
+        public IActionResult Edit(int id, NewBranchForm newBranchForm)
+        {
+            using (var context = new BankContext())
             {
                 var branch = context.BankBranches.Find(id);
-                if(branch == null)
+                if (branch == null)
                 {
                     branch.Name = newBranchForm.Name;
                     branch.LocationURL = newBranchForm.LocationURL;
@@ -100,7 +97,35 @@ namespace WebApplication1.Controllers
                 }
                 return View();
             }
-                }
+        }
+        [HttpGet]
+        public IActionResult AddEmployee(int Id)
+        {
+            ViewBag.BranchId = Id;
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddEmployee(int Id, AddEmployeeForm form)
+        {
+            if (ModelState.IsValid)
+            {
+                var database = new BankContext();
+                var bankBranch = database.BankBranches.Find(Id);
+                var newEmployee = new Employee();
+
+                //newEmployee.Id = form.Id;
+                newEmployee.Name = form.Name;
+                newEmployee.CivilId = form.CivilId;
+                newEmployee.Position = form.Position;
+                //newEmployee.BankBranchId = form.BankBranchId;
+
+                // database.Employees.Add(newEmployee);
+                bankBranch.Employees.Add(newEmployee);
+                database.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(form);
+        }
     }
 }
 

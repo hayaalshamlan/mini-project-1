@@ -3,7 +3,7 @@
 *@
 @{
 }
-@model BankBranch
+@* @model BankBranch
 <h1> Branch Details</h1>
 <table class="Table">
     <tr>
@@ -24,6 +24,141 @@
     </tr>
     <tr>
         <th>Employee Count</th>
-        <td>@Model.EmployeeCount</td>
+        <td>@Model.Employees.Count</td>
     </tr>
 </table>
+<div>
+    <a asp-controller="Bank" asp-action="AddEmployee" asp-route-Id="@Model.Id" class="btn btn-primary">Add Employee</a>
+</div>
+@if (Model.Employees != null && Model.Employees.Any())
+{
+   <ul>
+       @foreach (var employee in Model.Employees)
+        {
+            <li> @employee.Name - @employee.CivilId - @employee.Position</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No employees found.</p>
+}
+*@
+@model BankBranch
+<style>
+
+    
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        color: #333;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #007bff;
+    }
+
+    table {
+        width: 100%;
+        margin-bottom: 20px;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+    .no-employees {
+        color: #999;
+    }
+</style>
+
+<div class="container">
+    <h1>Branch Details</h1>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <th>Location URL</th>
+            <td>@Model.LocationURL</td>
+        </tr>
+        <tr>
+            <th>Location Name</th>
+            <td>@Model.LocationName</td>
+        </tr>
+        <tr>
+            <th>Branch Manager</th>
+            <td>@Model.BranchManager</td>
+        </tr>
+        <tr>
+            <th>Employee Count</th>
+            <td>@Model.Employees.Count</td>
+        </tr>
+    </table>
+
+    <div>
+        <a asp-controller="Bank" asp-action="AddEmployee" asp-route-Id="@Model.Id" class="btn btn-primary">Add Employee</a>
+    </div>
+
+    @if (Model.Employees != null && Model.Employees.Any())
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Civil ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var employee in Model.Employees)
+                {
+                    <tr>
+                        <td>@employee.Name</td>
+                        <td>@employee.Position</td>
+                        <td>@employee.CivilId</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="no-employees">No employees found.</p>
+    }
+</div>
+

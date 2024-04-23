@@ -9,6 +9,7 @@ namespace WebApplication1.Models
         {
             optionsBuilder.UseSqlite("Data Source=bank.db");
         }
+        public DbSet<Employee> Employees { get; set; }
     }
 
 }

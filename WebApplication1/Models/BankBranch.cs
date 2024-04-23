@@ -9,5 +9,7 @@
         public string BranchManager { get; set; }
         public int EmployeeCount { get; set; }
         public int Id { get; set; }
+
+        public List<Employee> Employees { get; set; } = new();
     }
 }

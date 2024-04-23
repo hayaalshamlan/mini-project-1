@@ -13,6 +13,15 @@ namespace WebApplication1.Models
         [Required]
         public string BranchManager { get; set; }
         [Required]
-        public int EmployeeCout {  get; set; }
+        public int EmployeeCout { get; set; }
+    }
+
+
+    public class AddEmployeeForm
+    {
+        public string Name { get; set; }
+        public string CivilId { get; set; }
+        public string Position { get; set; }
+
     }
 }
